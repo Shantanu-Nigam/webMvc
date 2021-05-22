@@ -3,6 +3,8 @@
 <title>My Login Page</title>
 </head>
 <body>
-Yuuhooo!!!!     Congrats for getting logged IN
+Hey There!!
+Welcome, ${param1}. 
+You are ${param2} years old.
 </body>
 </html>
