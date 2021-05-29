@@ -20,7 +20,7 @@ public class TodoService {
 		myTodos.add(new Todo(3,"Shantanu","Learn MicroServices", new Date(), false));
 	}
 	
-	public String showAllTodos(String myModel) {
+	public ArrayList<Todo> showAllTodos(String myModel) {
 		ArrayList<Todo> filteredTodosByUser = new ArrayList<Todo>();
 		System.out.println(myModel);
 		for(Todo t : myTodos) {
@@ -29,13 +29,54 @@ public class TodoService {
 				filteredTodosByUser.add(t);
 			}
 		}
-		
-		 if(!filteredTodosByUser.isEmpty()) {
-			return filteredTodosByUser.toString(); 
-		 }
 		 
-		 return "Your Slate is Clean";
+		 return filteredTodosByUser; 
 	}
+	
+	public void createTodo(String owner, String description, String isComplete) {
+		myTodos.add(new Todo(++todosCount, owner, description, new Date(), Boolean.parseBoolean(isComplete)));
+		
+	}
+	
+	public Todo getTodoWithId(String id, String name) {
+		Todo gotTodo = null;
+		for(Todo item : myTodos) {
+			if(Integer.parseInt(id) == item.getId()) {
+				gotTodo = item;
+			}
+		}
+		return gotTodo;
+	}
+	
+	public void updateTodoWithId(String id, String name, String descToUpdate, String statusToUpdate) {
+		Todo toUpdate = getTodoWithId(id, name);
+		int index = findIndex(toUpdate.getId());
+		myTodos.remove(index);
+		toUpdate.setDesc(descToUpdate);
+		toUpdate.setComplete(Boolean.parseBoolean(statusToUpdate));
+		myTodos.add(index, toUpdate);
+	}
+
+	public void deleteTodoWithId(String id, String name) {
+		Todo toUpdate = getTodoWithId(id, name);
+		int index = findIndex(toUpdate.getId());
+		//console.log("index = "+index);
+		System.out.println("index = "+index);
+		myTodos.remove(index);
+		
+	}
+	
+	public int findIndex(int id) {
+		int index = 0;
+		for(Todo t : myTodos) {
+			if(t.getId() == id) {
+				return index;
+			}
+			index++;
+		}
+		return index;
+	}
+
 
 	
 }
